@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\leand\PycharmProjects\blackup-site\venv"
+VIRTUAL_ENV="D:\Projetos\Python\blackcup-site\blackcup-site\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

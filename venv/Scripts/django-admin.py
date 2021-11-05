@@ -1,4 +1,4 @@
-#!c:\users\leand\pycharmprojects\blackup-site\venv\scripts\python.exe
+#!d:\projetos\python\blackcup-site\blackcup-site\venv\scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
