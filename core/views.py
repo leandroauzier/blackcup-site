@@ -7,3 +7,11 @@ def index(request):
 
 def login(request):
     return render(request, 'login.html')
+
+
+def sobre(request):
+    return render(request, 'sobre.html')
+
+
+def games(request):
+    return render(request, 'games.html')
