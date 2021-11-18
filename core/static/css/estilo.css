@@ -5,7 +5,7 @@ body{
     background-color: #30004E;
 }
 footer{
-    background-color: black;
+    background-color: #202020;
     color: white;
     padding: 20px 5px;
     position: fixed;
@@ -18,6 +18,7 @@ footer{
     z-index: -10;
     width: 100%;
     height: 500px;
+    margin-bottom: 200px;
 }
 .Main-text{
     border-radius: 20px;
@@ -27,7 +28,7 @@ footer{
     z-index: -5;
     background-color: rgba(0, 0, 0, 0.8);
 }
-#game-description{
+.game-description{
     position: relative;
     border-style: solid;
     border-width: 2px;
@@ -38,18 +39,25 @@ footer{
     height: 150px;
     box-shadow: 10px 10px 2px #888888;
     padding: 0px 10px;
-    margin-left: 10px;
+    margin-left: 200px;
     display: inline-block;
 }
-#game-image{
-    position: relative;
+.game-image{
+    position: absolute;
     height: 150px;
     width: 150px;
     background-color: purple;
     box-shadow: 10px 10px 2px #888888;
     display: inline-block;
 }
-#game-painel{
-    background-color: black;
-    padding: 40px;
+.game-content{
+    background-color: #202020;
+    padding: 30px;
+    color: white;
+}
+#games{
+    padding-bottom: 100px;
+}
+h3{
+    padding: 40px 10px;
 }

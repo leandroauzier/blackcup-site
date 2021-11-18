@@ -1,15 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 {% extends 'base.html' %}
 <body>
 {% block conteudo %}
-<div class="container" id="game-painel">
-    <h3>Conheça nossos games!</h3>
-    <div id="game-image">
-        <img src="">
+<div class="container" id="games">
+    <div class="game-content">
+        <h3>Conheça nossos games!</h3>
+        <div class="game-image">
+            <img src="static/images/games/img1.png" alt="game-01">
+        </div>
+        <div class="game-description">
+            <p>Este é nosso primeiro jogo, chamado 'primeiro jogo'.</p>
+        </div>
     </div>
-    <div id="game-description">
-        <p>Este é nosso primeiro jogo, chamado 'primeiro jogo'.</p>
+    <div class="game-content">
+        <div class="game-image">
+            <img src="static/images/games/img1.png" alt="game-02">
+        </div>
+        <div class="game-description">
+            <p>Este é nosso segundo jogo, chamado 'segundo jogo'.</p>
+        </div>
+    </div>
+    <div class="game-content">
+        <div class="game-image">
+            <img src="static/images/games/img1.png" alt="game-03">
+        </div>
+        <div class="game-description">
+            <p>Este é nosso terceiro jogo, chamado 'terceiro jogo'.</p>
+        </div>
     </div>
 </div>
 {% endblock conteudo %}
