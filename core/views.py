@@ -1,17 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
 
-def index(request):
-    return render(request, 'index.html')
+def Home(request):
+    return render(request, "index.html")
 
+def Sobre(request):
+    return render(request, "sobre.html")
 
-def login(request):
-    return render(request, 'login.html')
+def Games(request):
+    return render(request, "games.html")
 
-
-def sobre(request):
-    return render(request, 'sobre.html')
-
-
-def games(request):
-    return render(request, 'games.html')
+def Developers(request):
+    return render(request, "developers.html")

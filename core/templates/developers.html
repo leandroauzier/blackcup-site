@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% extends 'base.html' %}
+<body>
+{% block conteudo %}
+<div class="container" id="games">
+    <div class="game-content">
+        <h3>Nosso time de desenvolvedores</h3>
+        <div class="dev-image">
+            <img src="static/images/profile/user.png" alt="dev-01">
+        </div>
+        <div class="game-description">
+            <p>Nome: Leandro.</p>
+            <p id="idade1"><script>const ano = document.getElementById("idade1");const anoAtual = new Date();ano.innerHTML = anoAtual.getFullYear() - 1997;</script> anos.</p>
+            <p>Stack: Backend: Python, C#, Django, SQL, AWS; Frontend: HTML, CSS, VueJS, React; GameDev: Unity, RPG maker.</p>
+        </div>
+    </div>
+    <div class="game-content">
+        <div class="dev-image">
+            <img src="static/images/profile/user.png" alt="dev-02">
+        </div>
+        <div class="game-description">
+            <p>Nome: Ramon.</p>
+            <p id="idade2"><script>const ano2 = document.getElementById("idade2");const ano2Atual = new Date();ano2.innerHTML = ano2Atual.getFullYear() - 2000;</script> anos.</p>
+            <p>Stack: Backend: ; Frontend: ; GameDev:.</p>
+        </div>
+    </div>
+    <div class="game-content">
+        <div class="dev-image">
+            <img src="static/images/profile/user.png" alt="dev-03">
+        </div>
+        <div class="game-description">
+            <p>Nome: Julio.</p>
+            <p id="idade3"><script>const ano3 = document.getElementById("idade3");const ano3Atual = new Date();ano3.innerHTML = ano3Atual.getFullYear() - 1999;</script> anos.</p>
+            <p>Stack: Backend: ; Frontend: ; GameDev:.</p>
+        </div>
+    </div>
+</div>
+{% endblock conteudo %}
+</body>
+</html>

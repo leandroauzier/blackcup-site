@@ -1,11 +1,9 @@
-from django.urls import path, include
-from .views import index, login, sobre, games
-
-app_name = "core"
+from django.urls import path
+from .views import Home, Sobre, Games, Developers
 
 urlpatterns = [
-    path('', index, name='index'),
-    path('login', login, name='login'),
-    path('sobre', sobre, name='sobre'),
-    path('games', games, name='games'),
+    path('', Home, name='home'),
+    path('sobre', Sobre, name='sobre'),
+    path('games', Games, name='games'),
+    path('developers', Developers, name='developers'),
 ]

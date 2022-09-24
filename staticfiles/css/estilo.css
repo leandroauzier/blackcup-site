@@ -71,3 +71,7 @@ h3{
     padding: 40px 10px;
 }
 
+img{
+    max-height:150px;
+    max-width:150px;
+}
