@@ -6,3 +6,6 @@ Este é um projeto teste onde posteriormente pode ser usado em produção de um 
 - React 
 - TypeScript
 - Next JS
+
+### Documentações de UI:
+- Material-tailwind/react: https://www.npmjs.com/package/@material-tailwind/react

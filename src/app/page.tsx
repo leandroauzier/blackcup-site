@@ -1,11 +1,14 @@
 import Image from "next/image";
 import { Typography } from "@mui/material";
-import { Roboto }from '@fontsource/roboto/500.css'
+import { Roboto }from '@fontsource/roboto/500.css';
+import Footer from "@/components/footer";
+import navbar from "../components/navbar";
 
 export default function Home() {
   return (
     <>
       <div className="justify-center text-white bg-white dark:bg-gray-950 h-screen">
+        <navbar />
         <Typography
           variant="h1"
           color="purple"
@@ -22,6 +25,7 @@ export default function Home() {
         >
           Entertainment
         </Typography>
+        <Footer />
       </div>
     </>
   );
