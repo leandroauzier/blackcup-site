@@ -1,12 +1,84 @@
+'use client'
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import SocioCard from "@/components/sobre/socioCard";
 import Tabs from "@/components/tabs";
 import { Typography } from "@mui/material";
+import { useState } from "react";
 
 type SobreProps = {};
 
 export default function Sobre({ }: SobreProps) {
+    const [activeTab, setActiveTab] = useState("Missão");
+
+    const handleTabChange = (tab: string) => {
+        setActiveTab(tab);
+    };
+
+    const renderAtributos = () => {
+        switch (activeTab) {
+            case "Missão":
+                return (
+                    <>
+                        <Typography
+                            variant="h5"
+                            color={"GrayText"}
+                        >
+                            Missão da Empresa Blackcup
+                        </Typography>
+
+                        <Typography
+                            variant="body1"
+                            color="white"
+                            className="pt-4 pb-8"
+                        >
+                            A missão da Blackcup é criar jogos que emocionem, divirtam e inspirem as pessoas. Buscamos oferecer experiências únicas e memoráveis, que conectem os jogadores com novos mundos e histórias. Nosso objetivo é impactar positivamente a vida das pessoas, proporcionando momentos de entretenimento e escapismo através de nossos jogos.
+                        </Typography>
+                    </>
+                );
+            case "Valores":
+                return (
+                    <>
+                        <Typography
+                            variant="h5"
+                            color={"GrayText"}
+                        >
+                            Valores da Empresa Blackcup
+                        </Typography>
+
+                        <Typography
+                            variant="body1"
+                            color="white"
+                            className="pt-4 pb-8"
+                        >
+                            Os valores da Blackcup são fundamentais para nossa cultura e guiam nossas ações e decisões diárias. Valorizamos a criatividade e a originalidade, buscando constantemente inovar em nossos jogos. Acreditamos na excelência, sempre buscando aprimorar nossos processos e produtos. Valorizamos a diversidade e o respeito, criando um ambiente inclusivo e acolhedor para todos os colaboradores e parceiros. A transparência e a ética são essenciais em todas as nossas relações, buscando sempre agir com integridade e responsabilidade.
+                        </Typography>
+                    </>
+                );
+            case "Visão":
+                return (
+                    <>
+                        <Typography
+                            variant="h5"
+                            color={"GrayText"}
+                        >
+                            Visão da Empresa Blackcup
+                        </Typography>
+
+                        <Typography
+                            variant="body1"
+                            color="white"
+                            className="pt-4 pb-8"
+                        >
+                            A Blackcup tem a visão de se tornar uma referência no desenvolvimento de jogos no Brasil, reconhecida pela qualidade e originalidade de seus produtos. Buscamos criar experiências inovadoras que cativem e envolvam os jogadores, contribuindo para o crescimento e reconhecimento da indústria de jogos nacional e internacionalmente.
+                        </Typography>
+                    </>
+                );
+            default:
+                return null;
+        }
+    };
+
     const content = (
         <section className="px-8 pt-6 dark:bg-black">
             <div className="container mx-auto w-2/3 text-justify">
@@ -78,56 +150,16 @@ export default function Sobre({ }: SobreProps) {
                     Juntos, Leandro, Julio, Ramon e Paulo formam uma equipe diversificada e talentosa que impulsiona a inovação e a excelência na indústria de desenvolvimento de jogos. Seus diferentes conjuntos de habilidades e experiências se complementam, permitindo que a Blackcup crie jogos de alta qualidade que cativam e emocionam jogadores em todo o mundo.
                 </Typography>
 
-                <Tabs 
-                opcao1="Missão"
-                opcao2="Valores"
-                opcao3="Visão"
-                className="my-4"
+                <Tabs
+                    opcao1="Missão"
+                    opcao2="Valores"
+                    opcao3="Visão"
+                    activeTab={activeTab}
+                    onTabChange={handleTabChange}
+                    className="my-4"
                 />
+                {renderAtributos()}
 
-                <Typography
-                    variant="h5"
-                    color={"GrayText"}
-                >
-                    Visão da Empresa Blackcup
-                </Typography>
-
-                <Typography
-                    variant="body1"
-                    color="white"
-                    className="pt-4 pb-8"
-                >
-                    A Blackcup tem a visão de se tornar uma referência no desenvolvimento de jogos no Brasil, reconhecida pela qualidade e originalidade de seus produtos. Buscamos criar experiências inovadoras que cativem e envolvam os jogadores, contribuindo para o crescimento e reconhecimento da indústria de jogos nacional e internacionalmente.
-                </Typography>
-
-                <Typography
-                    variant="h5"
-                    color={"GrayText"}
-                >
-                    Valores da Empresa Blackcup
-                </Typography>
-
-                <Typography
-                    variant="body1"
-                    color="white"
-                    className="pt-4 pb-8"
-                >
-                    Os valores da Blackcup são fundamentais para nossa cultura e guiam nossas ações e decisões diárias. Valorizamos a criatividade e a originalidade, buscando constantemente inovar em nossos jogos. Acreditamos na excelência, sempre buscando aprimorar nossos processos e produtos. Valorizamos a diversidade e o respeito, criando um ambiente inclusivo e acolhedor para todos os colaboradores e parceiros. A transparência e a ética são essenciais em todas as nossas relações, buscando sempre agir com integridade e responsabilidade.
-                </Typography>
-                <Typography
-                    variant="h5"
-                    color={"GrayText"}
-                >
-                    Missão da Empresa Blackcup
-                </Typography>
-
-                <Typography
-                    variant="body1"
-                    color="white"
-                    className="pt-4 pb-8"
-                >
-                    A missão da Blackcup é criar jogos que emocionem, divirtam e inspirem as pessoas. Buscamos oferecer experiências únicas e memoráveis, que conectem os jogadores com novos mundos e histórias. Nosso objetivo é impactar positivamente a vida das pessoas, proporcionando momentos de entretenimento e escapismo através de nossos jogos.
-                </Typography>
             </div>
         </section >
     )

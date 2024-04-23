@@ -3,13 +3,18 @@ import React from "react";
 
 type TabsProps = {
     className?: string;
+    activeTab:string;
+    onTabChange: (tab: string) => void;
     opcao1: string;
     opcao2: string;
     opcao3: string;
 
 };
 
-export default function Tabs({ className, opcao1, opcao2, opcao3 }: TabsProps) {
+export default function Tabs({ className, opcao1, opcao2, opcao3, activeTab, onTabChange}: TabsProps) {
+    const handleClick = (tab: string) => {
+        onTabChange(tab);
+    };
     return (
         <>
             <div className={className}>
@@ -17,23 +22,30 @@ export default function Tabs({ className, opcao1, opcao2, opcao3 }: TabsProps) {
                     <li className="w-full focus-within:z-10">
                         {/* <a href="" */}
                         <Button
-                            className="uppercase text-2xl inline-block w-full p-4 text-gray-900 bg-gray-100 border-r border-gray-200 dark:border-gray-700 rounded-s-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page"
+                            onClick={() => handleClick(opcao1)}
+                            className="activeTab === opcao1 ? 'active' : '' uppercase text-xl inline-block w-full p-4 text-gray-900 bg-gray-100 border-r border-gray-200 dark:border-gray-700 rounded-s-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page"
                         >
                             {opcao1}
                         </Button>
                         {/* </a> */}
                     </li>
                     <li className="w-full focus-within:z-10">
-                        <a href=""
-                            className="uppercase text-2xl inline-block w-full p-4 bg-white border-r border-gray-200 dark:border-gray-700 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">
+                        {/* <a href="" */}
+                        <Button
+                            onClick={() => handleClick(opcao2)}
+                            className="activeTab === opcao2 ? 'active' : '' uppercase text-xl inline-block w-full p-4 text-gray-900 bg-gray-100 border-r border-gray-200 dark:border-gray-700 rounded-s-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page">
                             {opcao2}
-                        </a>
+                        </Button>
+                        {/* </a> */}
                     </li>
                     <li className="w-full focus-within:z-10">
-                        <a href=""
-                            className="uppercase text-2xl inline-block w-full p-4 bg-white border-r border-gray-200 dark:border-gray-700 hover:text-gray-700 rounded-e-lg hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">
+                        {/* <a href="" */}
+                        <Button
+                            onClick={() => handleClick(opcao3)}
+                            className="activeTab === opcao3 ? 'active' : '' uppercase text-xl inline-block w-full p-4 text-gray-900 bg-gray-100 border-r border-gray-200 dark:border-gray-700 rounded-s-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page">
                             {opcao3}
-                        </a>
+                        </Button>
+                        {/* </a> */}
                     </li>
                 </ul>
             </div>
