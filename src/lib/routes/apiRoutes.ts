@@ -1,4 +1,5 @@
-const apiSource = ""
+const apiRoute = process.env.APIURL;
 export const constApiRoute = {
-  home: '/',
+
+  login: apiRoute + 'login'
 }

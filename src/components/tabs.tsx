@@ -3,7 +3,7 @@ import React from "react";
 
 type TabsProps = {
     className?: string;
-    activeTab:string;
+    activeTab: string;
     onTabChange: (tab: string) => void;
     opcao1: string;
     opcao2: string;
@@ -11,7 +11,7 @@ type TabsProps = {
 
 };
 
-export default function Tabs({ className, opcao1, opcao2, opcao3, activeTab, onTabChange}: TabsProps) {
+export default function Tabs({ className, opcao1, opcao2, opcao3, activeTab, onTabChange }: TabsProps) {
     const handleClick = (tab: string) => {
         onTabChange(tab);
     };

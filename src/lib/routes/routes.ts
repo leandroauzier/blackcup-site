@@ -1,9 +1,11 @@
 export const constRoutes = {
-    home: '/',
-    cursos: '/cursos',
-    cursoID:`/cursos/detalhes`,
-    eventos: '/eventos',
-    eventoID:`/eventos/detalhes`,
-    sobre: '/sobre',
-    suporte: '/fale-conosco'
-  }
+  home: '/',
+  login: '/auth/signin',
+  cadastro: '/auth/signup',
+  cursos: '/cursos',
+  cursoID: (id: number) => `/cursos/${id}`,
+  eventos: '/eventos',
+  eventoID: (id: number) => `/eventos/${id}`,
+  sobre: '/sobre',
+  suporte: '/fale-conosco'
+}
