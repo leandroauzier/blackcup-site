@@ -1,5 +1,6 @@
-const apiRoute = process.env.APIURL;
+const apiRoute = "http://localhost:3000/api/"
 export const constApiRoute = {
 
-  login: apiRoute + 'login'
+  login: apiRoute + 'login',
+  cadastro: apiRoute + 'cadastro'
 }

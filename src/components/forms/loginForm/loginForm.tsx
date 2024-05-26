@@ -23,7 +23,8 @@ const LoginIn: React.FC = () => {
       cpf: formData.get("cpf") as string,
       senha: formData.get("senha") as string,
     }
-
+    console.log(data);
+    
     // signIn("credentials", {
     //   ...data,
     //   callbackUrl: "/",
@@ -34,7 +35,7 @@ const LoginIn: React.FC = () => {
         redirect: false,
         callbackUrl: "/",
       });
-
+      
       if (!response) {
         throw new Error("Sem resposta");
       }

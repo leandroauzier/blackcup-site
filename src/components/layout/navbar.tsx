@@ -1,6 +1,11 @@
+"use client"
 import { constRoutes } from "@/lib/routes/routes"
+import { useSession } from "next-auth/react";
+import Accountdropdown from "../dropdowns/Accountdropdown";
 
 export default function Navbar() {
+  const { data: session } = useSession();
+
   return (
 
     <nav
@@ -58,24 +63,29 @@ export default function Navbar() {
           </ul>
         </div>
 
-        <div className="flex gap-4">
-          <a href={constRoutes.login}>
-            <button
-              type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-blue-800"
-            >
-              Login
-            </button>
-          </a>
-          <a href={constRoutes.cadastro}>
-            <button
-              type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-blue-800"
-            >
-              Criar conta
-            </button>
-          </a>
-        </div>
+        {!session &&
+          <div className="flex gap-4">
+            <a href={constRoutes.login}>
+              <button
+                type="button"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-blue-800"
+              >
+                Login
+              </button>
+            </a><a href={constRoutes.cadastro}>
+              <button
+                type="button"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-blue-800"
+              >
+                Criar conta
+              </button>
+            </a>
+          </div>
+        }
+
+        {session &&
+          <Accountdropdown />
+        }
       </div>
     </nav>
 

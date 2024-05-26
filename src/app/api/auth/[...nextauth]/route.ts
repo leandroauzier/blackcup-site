@@ -1,6 +1,6 @@
-import { constApiRoute } from "@/lib/routes/apiRoutes"
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
+import { constApiRoute } from "@/lib/routes/apiRoutes";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 const url_api = constApiRoute.login ?? "URL Inexistente";
 
@@ -20,14 +20,13 @@ const handler = NextAuth({
                 
                 if(!credentials?.cpf || !credentials.senha){
                     throw new Error("Por favor Insira seu CPF e Senha para continuar");
-                  }
+                }
 
                 const res = await fetch(url_api, {
                     method: 'POST',
                     body: JSON.stringify(credentials),
                     headers: { "Content-Type": "application/json" }
                 })
-                console.log("API response status:", res.status);
 
                 if (res.status === 401) {
                     throw new Error('Credenciais inválidas');
@@ -44,6 +43,24 @@ const handler = NextAuth({
             }
         })
     ],
+    callbacks: {
+        async jwt({ token, user, session }) {
+          // Persist the OAuth access_token and or the user id to the token right after signin
+          console.log("JWT CALLBACK: ", {token, user, session});
+          
+        //   if (user) {
+        //     token.id = user.id
+        //   }
+          return token
+        },
+        async session({ session, token, user }) {
+            // Send properties to the client, like an access_token and user id from a provider.
+            console.log("JWT CALLBACK: ", {token, user, session});
+            return session
+          }
+      },
+
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
     }
