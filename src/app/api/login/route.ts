@@ -17,13 +17,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // if (user && await bcrypt.compare(senha, user.senha || "")) {
-    //   return NextResponse.json({ user }, { status: 200 });
-    // } else {
-    //   return NextResponse.json({ error: 'Invalid CPF or password' }, { status: 401 });
-    // }
-    console.log("RETORNA USUARIO: "+ user?.name, user?.cpf);
-    return NextResponse.json({ user }, { status: 200 });
+    if (user && await bcrypt.compare(senha, user.senha || "")) {
+      console.log("RETORNA USUARIO: "+ user?.name, user?.cpf);
+      return NextResponse.json({ user }, { status: 200 });
+    } else {
+      return NextResponse.json({ error: 'Dados incorretos' }, { status: 401 });
+    }
   } catch (error) {
     console.error('Error finding user:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

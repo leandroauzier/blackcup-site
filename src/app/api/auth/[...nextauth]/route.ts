@@ -1,6 +1,7 @@
 import { constApiRoute } from "@/lib/routes/apiRoutes";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from 'bcrypt';
 
 const url_api = constApiRoute.login ?? "URL Inexistente";
 
@@ -24,20 +25,24 @@ const handler = NextAuth({
 
                 const res = await fetch(url_api, {
                     method: 'POST',
-                    body: JSON.stringify(credentials),
+                    body: JSON.stringify({
+                        credentials
+                    }),
                     headers: { "Content-Type": "application/json" }
                 })
 
                 if (res.status === 401) {
                     throw new Error('Credenciais inválidas');
-                  }
+                }
 
                 const user = await res.json()
+                console.log("USUARIO AQUI: "+user);
+                
 
                 // If no error and we have user data, return it
-                if (res.ok && user) {
+                // if (res.ok && user) {
                     return user
-                }
+                // }
                 // Return null if user data could not be retrieved
                 return null
             }
@@ -46,7 +51,7 @@ const handler = NextAuth({
     callbacks: {
         async jwt({ token, user, session }) {
           // Persist the OAuth access_token and or the user id to the token right after signin
-          console.log("JWT CALLBACK: ", {token, user, session});
+        //   console.log("JWT CALLBACK: ", {token, user, session});
           
         //   if (user) {
         //     token.id = user.id
@@ -55,7 +60,7 @@ const handler = NextAuth({
         },
         async session({ session, token, user }) {
             // Send properties to the client, like an access_token and user id from a provider.
-            console.log("JWT CALLBACK: ", {token, user, session});
+            // console.log("JWT CALLBACK: ", {token, user, session});
             return session
           }
       },

@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import bcrypt from "bcrypt"
 import { NextRequest, NextResponse } from "next/server";
 
 interface Usuario {
@@ -45,6 +46,8 @@ export async function POST(request: NextRequest) {
             return new NextResponse("E-mail já existe", { status: 400 });
         }
 
+        const hashedPassword = await bcrypt.hash(senha, 10);
+
         const user = await prisma.usuario.create({
             data: {
                 name,
@@ -52,7 +55,7 @@ export async function POST(request: NextRequest) {
                 cpf,
                 telefone,
                 escolaridade,
-                senha
+                senha: hashedPassword,
             },
         });
         const userWithoutPassword = { ...user } as Usuario;
