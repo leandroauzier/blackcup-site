@@ -5,23 +5,20 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import LogOut from "../forms/loginForm/logout";
 import generateInitialsImage from "@/utils/generateInitialsImage";
-import { useSession, signOut } from "next-auth/react";
+import { CurrentUserContext } from "@/lib/client/current-user-context";
+import React from "react";
+import { CurrentUser } from "@/lib/client/current-user";
 
-type AccountdropdownProps = {};
+type AccountdropdownProps = {
+  currentUser: CurrentUser;
+};
 
 export default function Accountdropdown({ }: AccountdropdownProps) {
-  const { data: session, status } = useSession();
+  const { currentUser } = React.useContext(CurrentUserContext);
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setuserName] = useState("Carregando...");
   const [userEmail, setuserEmail] = useState("Carregando...");
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      setuserName(session?.user?.name || "Vazio");
-      setuserEmail(session?.user?.email || "Vazio");
-    }
-  }, [status, session]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

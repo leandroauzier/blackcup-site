@@ -3,23 +3,11 @@ import { Button, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 import UnidadeDadosPerfil from "./UnidadeDadosPerfil";
 import AtualizaPerfilForm from "../forms/atualizaPerfilForm/atualizaPerfilForm";
+import { CurrentUserContext } from "@/lib/client/current-user-context";
 
-type PerfilComponentProps = {
-  nome?: string,
-  email?: string,
-  cpf?: string,
-  escolaridade?: string,
-  telefone?: string,
-}
-
-export default function PerfilComponent({
-  nome="Sem nome",
-  cpf="000.000.000-00" ,
-  email="semEmail@email.com",
-  escolaridade="Sem escolaridade",
-  telefone="(XX) 9XXXX-XXXX"
-} : PerfilComponentProps) {
+export default function PerfilComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { currentUser } = React.useContext(CurrentUserContext);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -53,11 +41,11 @@ export default function PerfilComponent({
           <hr />
           <div className="flex-col justify-center text-center h-[600px]">
             <div className="grid grid-cols-3">
-              <UnidadeDadosPerfil label="Nome" data={nome} />
-              <UnidadeDadosPerfil label="CPF" data={cpf} />
-              <UnidadeDadosPerfil label="Telefone" data={telefone}/>
-              <UnidadeDadosPerfil label="Escolaridade" data={escolaridade}/>
-              <UnidadeDadosPerfil label="Email" data={email} />
+              <UnidadeDadosPerfil label="Nome" data={currentUser?.nome} />
+              <UnidadeDadosPerfil label="CPF" data={currentUser?.cpf} />
+              <UnidadeDadosPerfil label="Telefone" data={currentUser?.telefone}/>
+              <UnidadeDadosPerfil label="Escolaridade" data={currentUser?.escolaridade}/>
+              <UnidadeDadosPerfil label="Email" data={currentUser?.email} />
             </div>
             <div className=" mt-4">
               <Button onClick={openModal} className="bg-purple-900 p-4">

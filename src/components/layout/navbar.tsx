@@ -1,11 +1,11 @@
 "use client"
 import { constRoutes } from "@/lib/routes/routes"
-import { useSession } from "next-auth/react";
 import Accountdropdown from "../dropdowns/Accountdropdown";
+import { CurrentUserContext } from "@/lib/client/current-user-context";
+import React from "react";
 
 export default function Navbar() {
-  const { data: session } = useSession();
-
+  const { currentUser } = React.useContext(CurrentUserContext);
   return (
 
     <nav
@@ -63,7 +63,7 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {!session &&
+        {!currentUser &&
           <div className="flex gap-4">
             <a href={constRoutes.login}>
               <button
@@ -83,8 +83,8 @@ export default function Navbar() {
           </div>
         }
 
-        {session &&
-          <Accountdropdown />
+        {currentUser &&
+          <Accountdropdown currentUser={currentUser}/>
         }
       </div>
     </nav>

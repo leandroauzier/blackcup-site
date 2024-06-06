@@ -1,11 +1,18 @@
 "use client"
 
 import React, { useState } from "react";
-import { signIn } from "next-auth/react";
-import { constRoutes } from "@/lib/routes/routes";
+import { signInEscon } from "@/lib/auth/auth";
+import { useRouter } from "next/navigation";
+import { Route } from "@/lib/routes";
+import { CurrentUserContext } from "@/lib/client/current-user-context";
 
 const LoginIn: React.FC = () => {
   const [cpf, setCpf] = useState('');
+  const [senha, setSenha] = useState('');
+  const { setCurrentUser } = React.useContext(CurrentUserContext);
+
+  const router = useRouter()
+
   const handleInputCPF = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formattedCPF = event.target.value.replace(/\D/g, '');
     const cpfWithMask = formattedCPF.replace(
@@ -17,47 +24,21 @@ const LoginIn: React.FC = () => {
   };
   async function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    const data = {
-      cpf: formData.get("cpf") as string,
-      senha: formData.get("senha") as string,
+    const unmaskedCpf = cpf.replace(/\D/g, '');
+    const creds = {
+      cpf: unmaskedCpf,
+      senha: senha,
     }
-    console.log(data);
-    
-    // signIn("credentials", {
-    //   ...data,
-    //   callbackUrl: "/",
-    // });
+
     try {
-      const response = await signIn("credentials", {
-        ...data,
-        redirect: false,
-        callbackUrl: "/",
-      });
-      
-      if (!response) {
-        throw new Error("Sem resposta");
+      const result = await signInEscon(creds);
+
+      if (result.kind === 'error') {
+        throw new Error('Usuário não encontrado');
       }
 
-      if (response.error) {
-        const statusCode = response.status || 400;
-        let errorMessage = response.error;
-
-        if (statusCode === 404) {
-          errorMessage = "Usuário não encontrado";
-        } else if (statusCode === 401) {
-          errorMessage = "Credenciais inválidas";
-        } else {
-          errorMessage = `Erro ao fazer login: ${errorMessage}`;
-        }
-        throw new Error(errorMessage);
-      }
-
-      // Redireciona para a URL de callback
-      if (response.url) {
-        window.location.href = response.url;
-      }
+      setCurrentUser(result.user);
+      router.push(Route.link.home);
     } catch (error: any) {
       console.error("Login error:", error);
       alert(error.message);
@@ -80,7 +61,7 @@ const LoginIn: React.FC = () => {
               name="cpf"
               value={cpf}
               maxLength={14}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Somente numeros"
               onChange={handleInputCPF}
               required />
@@ -96,38 +77,21 @@ const LoginIn: React.FC = () => {
               id="senha"
               name="senha"
               placeholder="Mínimo 8 dígitos"
+              onChange={(e) => setSenha(e.target.value)}
               minLength={8}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required />
           </div>
-          {/* <div className="flex items-start mb-5">
-          <div className="flex items-center h-5">
-          <input
-          id="remember"
-          type="checkbox"
-          value=""
-          className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-purple-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-purple-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-          required />
-          </div>
-          <label
-          htmlFor="remember"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-          Lembrar-me
-          </label>
-        </div> */}
           <button
             type="submit"
-            className="my-4 text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
+            className="my-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Entrar
           </button>
 
         </form>
-        <div className="text-black dark:text-white py-2">
-          <span>não tem uma conta?</span>
-        </div>
-        <a href={constRoutes.cadastro}>
+        <a href={Route.link.cadastro}>
           <button
-            className="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Criar Conta
           </button>
         </a>
