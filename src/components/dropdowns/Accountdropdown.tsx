@@ -34,7 +34,7 @@ export default function Accountdropdown({ }: AccountdropdownProps) {
     };
   }, []);
 
-  if (status === "loading") {
+  if (currentUser === "carregando") {
     return <p>Carregando...</p>;
   }
 

@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 
 export async function POST(req: NextRequest) {
   const { cpf, senha } = await req.json();
-    console.log("AUTENTICACAO DE CREDENCIAIS: "+ cpf, senha);
-    
+  console.log("AUTENTICACAO DE CREDENCIAIS: " + cpf, senha);
+  
   if (!cpf || !senha) {
     return NextResponse.json({ error: 'CPF and password are required' }, { status: 400 });
   }
@@ -17,8 +17,14 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (user && await bcrypt.compare(senha, user.senha || "")) {
-      console.log("RETORNA USUARIO: "+ user?.name, user?.cpf);
+    if (!user || !user.senha) {
+      return NextResponse.json({ error: 'Dados incorretos' }, { status: 401 });
+    }
+
+    const isPasswordValid = await bcrypt.compare(senha, user.senha);
+    
+    if (isPasswordValid) {
+      console.log("RETORNA USUARIO: " + user.name, user.cpf);
       return NextResponse.json({ user }, { status: 200 });
     } else {
       return NextResponse.json({ error: 'Dados incorretos' }, { status: 401 });

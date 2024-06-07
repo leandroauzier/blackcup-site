@@ -14,7 +14,7 @@ export type SignInResult = {
   message: string;
 };
 
-export async function signInEscon(creds: Credentials): Promise<SignInResult> {
+export async function signInBC(creds: Credentials): Promise<SignInResult> {
   try {
     const response = await fetch(Route.api.login, {
       method: 'POST',

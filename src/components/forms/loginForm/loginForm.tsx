@@ -1,14 +1,19 @@
 "use client"
 
 import React, { useState } from "react";
-import { signInEscon } from "@/lib/auth/auth";
+import { signInBC } from "@/lib/auth/auth";
 import { useRouter } from "next/navigation";
 import { Route } from "@/lib/routes";
 import { CurrentUserContext } from "@/lib/client/current-user-context";
+import Link from "next/link";
+import { Button } from "@material-tailwind/react";
 
 const LoginIn: React.FC = () => {
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
+  const [erro, setErro] = useState('');
+  const [sucesso, setSucesso] = useState('');
+
   const { setCurrentUser } = React.useContext(CurrentUserContext);
 
   const router = useRouter()
@@ -31,23 +36,30 @@ const LoginIn: React.FC = () => {
     }
 
     try {
-      const result = await signInEscon(creds);
+      const result = await signInBC(creds);
 
       if (result.kind === 'error') {
         throw new Error('Usuário não encontrado');
       }
 
       setCurrentUser(result.user);
+      setSucesso("Logado com sucesso")
       router.push(Route.link.home);
     } catch (error: any) {
       console.error("Login error:", error);
-      alert(error.message);
+      setErro(error.message);
     }
   }
 
   return (
     <>
       <div className="max-w-sm mx-auto">
+        <div className="text-red-500 flex justify-center">
+          {erro}
+        </div>
+        <div className="text-green-500 flex justify-center">
+          {sucesso}
+        </div>
         <form onSubmit={login}>
           <div className="mb-5">
             <label
@@ -82,19 +94,18 @@ const LoginIn: React.FC = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required />
           </div>
-          <button
+          <Button
             type="submit"
             className="my-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Entrar
-          </button>
-
+          </Button>
         </form>
-        <a href={Route.link.cadastro}>
-          <button
+        <Link href={Route.link.cadastro}>
+          <Button
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Criar Conta
-          </button>
-        </a>
+          </Button>
+        </Link>
       </div>
 
     </>

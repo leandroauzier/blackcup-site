@@ -1,12 +1,12 @@
 import React from "react";
-import { CurrentUser } from "./current-user";
+import { CurrentUser, UserResult } from "./current-user";
 
 type CurrentUserService = {
-  readonly currentUser: CurrentUser | null;
-  readonly setCurrentUser: (user: CurrentUser | null) => void;
+  readonly currentUser: UserResult ;
+  readonly setCurrentUser: (user: UserResult) => void;
 };
 
 export const CurrentUserContext = React.createContext<CurrentUserService>({
-  currentUser: null,
+  currentUser: "carregando",
   setCurrentUser: () => {},
 });

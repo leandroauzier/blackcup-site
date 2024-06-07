@@ -5,3 +5,5 @@ export type CurrentUser = {
     telefone: string;
     escolaridade: string;
   };
+
+export type UserResult = CurrentUser | "nao-logado" | "carregando";
