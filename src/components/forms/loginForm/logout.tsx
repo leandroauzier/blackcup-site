@@ -13,7 +13,7 @@ export default function LogOut() {
       className="p-4 w-full text-red-500"
       variant="text"
       onClick={() => {
-        setCurrentUser(null);
+        setCurrentUser("nao-logado");
         router.refresh();
       }}
     >

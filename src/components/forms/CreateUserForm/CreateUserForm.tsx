@@ -12,7 +12,7 @@ type CreateUserFormProps = {
 export default function CreateUserForm({
   className = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 }: CreateUserFormProps) {
-  const [name, setName] = useState('');
+  const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
   const [telefone, setTelefone] = useState('');
   const [escolaridade, setEscolaridade] = useState('');
@@ -37,7 +37,7 @@ export default function CreateUserForm({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!name || !cpf || !email || !senha) {
+    if (!nome || !cpf || !email || !senha) {
       setError('Por favor, preencha os campos obrigatórios.');
       return;
     }
@@ -52,16 +52,13 @@ export default function CreateUserForm({
 
     try {
       const payload = {
-        name: name,
+        nome: nome,
         cpf: cpf,
         telefone: formattedTelefone,
-        escolaridade: escolaridade,
+        escolaridade: escolaridade ? escolaridade : "Prefiro não dizer",
         email: email,
         senha: senha,
       };
-      console.log('Sending payload:', payload);
-      console.log("API ROTA :"+constApiRoute.cadastro);
-      
 
       // API
       const response = await fetch(constApiRoute.cadastro, {
@@ -72,30 +69,22 @@ export default function CreateUserForm({
         body: JSON.stringify(payload),
       });
 
-
-      console.log('Response status:', response.status);
-      console.log('data:', response.body);
-      console.log('Response statusText:', response.statusText);
-
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Error response text:', errorText);
         throw new Error(errorText || 'Erro ao cadastrar usuário');
       }
 
       const result = await response.json();
-      console.log('Usuário criado com sucesso:', result);
 
-
-      setSuccess('Usuário cadastrado com sucesso!');
-      setName('');
+      setNome('');
       setCpf('');
       setTelefone('')
       setEscolaridade('')
       setEmail('');
       setSenha('');
 
-      window.alert(success);
+      setError("")
+      setSuccess('Usuário cadastrado com sucesso!');
       router.push(constRoutes.login)
 
     } catch (error: any) {
@@ -106,8 +95,6 @@ export default function CreateUserForm({
   };
   return (
     <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
-      {/* {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>} */}
       <div className="my-5">
         <label htmlFor="cpf" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           CPF <span style={{ color: 'red' }}>*</span>
@@ -131,8 +118,8 @@ export default function CreateUserForm({
         <input
           id="name"
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
           maxLength={54}
           className={className}
         />
@@ -189,6 +176,18 @@ export default function CreateUserForm({
       <Button type="submit" className="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Cadastrar
       </Button>
+      <div className='flex flex-col justify-center text-center pt-4'>
+        {error &&
+          <div className='text-red-500 bg-red-100 rounded-lg text-center w-full p-2'>
+            {error}
+          </div>
+        }
+        {success &&
+          <div className='text-green-500 bg-green-100 rounded-lg text-center w-full p-2'>
+            {success}
+          </div>
+        }
+      </div>
     </form>
   );
 }

@@ -43,7 +43,9 @@ const LoginIn: React.FC = () => {
       }
 
       setCurrentUser(result.user);
+      setErro("")
       setSucesso("Logado com sucesso")
+      await new Promise(resolve => setTimeout(resolve, 500));
       router.push(Route.link.home);
     } catch (error: any) {
       console.error("Login error:", error);

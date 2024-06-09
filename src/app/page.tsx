@@ -1,3 +1,4 @@
+'use client'
 import { Typography } from "@mui/material";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";

@@ -1,23 +1,22 @@
 "use client"
 
-import { constRoutes } from "@/lib/routes/routes";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import LogOut from "../forms/loginForm/logout";
-import generateInitialsImage from "@/utils/generateInitialsImage";
+import { UserResult } from "@/lib/client/current-user";
 import { CurrentUserContext } from "@/lib/client/current-user-context";
-import React from "react";
-import { CurrentUser } from "@/lib/client/current-user";
+import { constRoutes } from "@/lib/routes/routes";
+import generateInitialsImage from "@/utils/generateInitialsImage";
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
+import LogOut from "../forms/loginForm/logout";
+import Link from "next/link";
+import { Button } from "@material-tailwind/react";
 
 type AccountdropdownProps = {
-  currentUser: CurrentUser;
+  currentUser: UserResult;
 };
 
-export default function Accountdropdown({ }: AccountdropdownProps) {
-  const { currentUser } = React.useContext(CurrentUserContext);
+export default function Accountdropdown({ currentUser }: AccountdropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [userName, setuserName] = useState("Carregando...");
-  const [userEmail, setuserEmail] = useState("Carregando...");
+  const [nomeSimplificado, setNomeSimplificado] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,17 +32,51 @@ export default function Accountdropdown({ }: AccountdropdownProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  useEffect(() => {
+    // Se o objeto user for diferente de null
+    if (typeof currentUser === "object" && currentUser !== null && "nome" in currentUser) {
+      const nomeLimpo = currentUser.nome.replace(/[^\w\s]/gi, '');
+      const palavras = nomeLimpo.split(/\s+/);
+      let nomeSimplificadoTemp = '';
 
-  if (currentUser === "carregando") {
-    return <p>Carregando...</p>;
-  }
+      if (palavras.length > 1) {
+        nomeSimplificadoTemp = `${palavras[0]} ${palavras[palavras.length - 1]}`;
+      } else if (palavras.length === 1) {
+        nomeSimplificadoTemp = palavras[0];
+      }
 
+      setNomeSimplificado(nomeSimplificadoTemp);
+    }
+  }, [currentUser]);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  let imgSrc = generateInitialsImage(userName || "Usuário Logado", true);
+  if (currentUser === "carregando") {
+    return <p className="text-white">Carregando...</p>;
+  }
+  if (currentUser === "nao-logado") {
+    return (
+      <>
+        <div>
+          <Link href={constRoutes.login} target="_self">
+          <Button className="text-white font-bold bg-purple-700 p-4 text-sm" variant="filled">
+              Entrar
+            </Button>
+          </Link>
+        </div>
+        <div>
+          <Link href={constRoutes.cadastro} target="_self">
+            <Button className="text-white font-bold bg-purple-700 p-4 text-sm" variant="filled">
+              Cadastrar-se
+            </Button>
+          </Link>
+        </div>
+      </>
+    );
+  }
 
+  let imgSrc = generateInitialsImage(currentUser.nome, true);
   return (
     <>
       <div className="relative" ref={dropdownRef}>
@@ -61,7 +94,7 @@ export default function Accountdropdown({ }: AccountdropdownProps) {
             width={50}
             height={50}
           />
-          {userName}
+          {nomeSimplificado}
           <svg
             className="w-2.5 h-2.5 ms-3"
             aria-hidden="true"
@@ -89,7 +122,7 @@ export default function Accountdropdown({ }: AccountdropdownProps) {
             <div className="font-medium text-blue-600">Usuário</div>
             <div className="truncate">
               <p>
-                {userEmail}
+                {currentUser.email}
               </p>
             </div>
           </div>
@@ -133,12 +166,6 @@ export default function Accountdropdown({ }: AccountdropdownProps) {
             </li>
           </ul>
           <div className="py-2">
-            {/* <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >
-              Sair
-            </a> */}
             <LogOut />
           </div>
         </div>

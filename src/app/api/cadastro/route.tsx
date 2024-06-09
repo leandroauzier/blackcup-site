@@ -3,7 +3,7 @@ import bcrypt from "bcrypt"
 import { NextRequest, NextResponse } from "next/server";
 
 interface Usuario {
-    name: string;
+    nome: string;
     email: string;
     cpf: string;
     telefone: string;
@@ -20,9 +20,9 @@ export async function POST(request: NextRequest) {
             return new NextResponse("Dados não fornecidos", { status: 400 });
         }
 
-        const { name, email, cpf, telefone, escolaridade, senha } = body;        
+        const { nome, email, cpf, telefone, escolaridade, senha } = body;        
 
-        if (!name || !email || !cpf || !senha) {
+        if (!nome || !email || !cpf || !senha) {
             return new NextResponse("Existem campos em branco", { status: 400 })
         }
 
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
 
         const user = await prisma.usuario.create({
             data: {
-                name,
+                nome,
                 email,
                 cpf,
                 telefone,
