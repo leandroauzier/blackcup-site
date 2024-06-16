@@ -8,12 +8,12 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col justify-center text-white dark:bg-gray-950 h-screen">
-        <div className="pl-20">
+      <div className="flex flex-col justify-center text-white dark:bg-gray-950 md:h-screen">
+        <div className="pl-20 relative z-10 bg-black bg-opacity-80 border-y-2 py-4">
           <Typography
             variant="h1"
             color="purple"
-            className="text-8xl text-start"
+            className="md:text-8xl text-6xl text-start"
             fontFamily="Roboto"
           >
             Blackcup
@@ -21,23 +21,20 @@ export default function Home() {
           <Typography
             variant="subtitle1"
             color="white"
-            className="text-4xl pl-2 justify-start text-left"
+            className="md:text-4xl text-2xl pl-2 justify-start text-left"
             fontFamily="Roboto"
           >
             Entertainment
           </Typography>
         </div>
-
       </div>
       <div className="items-center justify-between px-10">
         <Image
           src="/images/empresa-games.jpg"
           alt="Escola"
-          width={600}
-          height={600}
-          className="absolute inset-0 ml-auto w-[600px] h-[600px] rounded-bl-[100px] object-cover object-center"
-        />
-        <div />
+          width={1000}
+          height={1000}
+          className="md:absolute inset-0 ml-auto md:w-[600px] md:h-[600px] rounded-bl-[100px] object-cover object-center" />
       </div>
       <Footer />
     </>

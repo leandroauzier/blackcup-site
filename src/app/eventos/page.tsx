@@ -16,12 +16,14 @@ export default function Page({ }: PageProps) {
                     <Typography
                         variant="h2"
                         fontFamily="Roboto"
-                        className="text-purple-500"
+                        className="text-purple-700"
                     >
                         Eventos
                     </Typography>
                 </div>
-                <div className="grid grid-cols-3 gap-4 mb-20">
+                <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mb-20">
+                    <EventCard />
+                    <EventCard />
                     <EventCard />
                     <EventCard />
                     <EventCard />
@@ -35,7 +37,9 @@ export default function Page({ }: PageProps) {
     return (
         <>
             <Navbar />
+            <div className="flex justify-center">
             {content}
+            </div>
             <Footer />
         </>
     );

@@ -81,11 +81,11 @@ export default function Sobre({ }: SobreProps) {
 
     const content = (
         <section className="px-8 pt-6 dark:bg-black">
-            <div className="container mx-auto w-2/3 text-justify">
+            <div className="container mx-auto text-justify">
                 <Typography
                     variant="h2"
                     color="blueviolet"
-                    className="my-4"
+                    className="my-4 text-4xl sm:text-6xl"
                 >
                     O que é a Blackcup?
                 </Typography>
@@ -100,7 +100,7 @@ export default function Sobre({ }: SobreProps) {
                 <Typography
                     variant="h2"
                     color="blueviolet"
-                    className="my-4"
+                    className="my-4 text-4xl sm:text-6xl"
                 >
                     Quem são os fundadores?
                 </Typography>

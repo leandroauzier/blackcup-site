@@ -10,12 +10,12 @@ export default function SignUp() {
     <>
       <Navbar />
       <div className="flex justify-center bg-gray-950">
-        <div className="border bg-gray-800 border-gray-300 p-10 mt-8 w-2/6 rounded-lg">
+        <div className="border bg-gray-800 border-gray-300 p-10 m-8 w-[600px] rounded-lg">
           <div className="justify-center text-center">
             <Typography
               variant="h2"
               color="blue"
-              className="dark:text-yellow-600"
+              className="dark:text-yellow-600 text-2xl sm:text-4xl"
             >
               Crie sua conta Blackcup
             </Typography>

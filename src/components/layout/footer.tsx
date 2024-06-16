@@ -1,5 +1,6 @@
 'use client'
 import { Typography } from "@material-tailwind/react";
+import Link from "next/link";
 
 const LINKS = [
   {
@@ -27,7 +28,7 @@ export function Footer() {
     <footer className="px-8 pt-10 pb-8 shadow-md border-t-2 bg-white dark:bg-black">
       <div className="container max-w-6xl flex flex-col mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-1 !w-full ">
-          <div className="flex col-span-2 items-center gap-10 mb-10 lg:mb-0 md:gap-36">
+          <div className="flex col-span-2 gap-10 mb-10 lg:mb-0 md:gap-36">
             {LINKS.map(({ title, items }) => (
               <ul key={title}>
                 <Typography
@@ -57,19 +58,13 @@ export function Footer() {
         </div>
         <Typography
           color="blue-gray"
-          className="md:text-center mt-16 font-normal !text-gray-700 dark:!text-white"
-
-
-        >
+          className="md:text-center mt-16 font-normal text-center !text-gray-700 dark:!text-white">
           &copy; {CURRENT_YEAR} {" "}
-          <a href="/" target="_blank">
+          <Link href="/" target="_blank">
             Leandro Sobrinho
-          </a>{" "}
+          </Link>{" "}
           -{" "}
-          <a href="#" target="_blank">
-            BlackCup Entertainment
-          </a>
-          .
+          BlackCup Entertainment.
         </Typography>
       </div>
     </footer>

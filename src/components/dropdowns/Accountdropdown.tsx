@@ -60,14 +60,14 @@ export default function Accountdropdown({ currentUser }: AccountdropdownProps) {
       <>
         <div>
           <Link href={constRoutes.login} target="_self">
-          <Button className="text-white font-bold bg-purple-700 p-4 text-sm" variant="filled">
+          <Button className="text-white font-bold bg-purple-700 hover:bg-purple-950 p-4 text-sm" variant="filled">
               Entrar
             </Button>
           </Link>
         </div>
         <div>
           <Link href={constRoutes.cadastro} target="_self">
-            <Button className="text-white font-bold bg-purple-700 p-4 text-sm" variant="filled">
+            <Button className="text-white font-bold bg-purple-700 p-4 hover:bg-purple-950 text-sm" variant="filled">
               Cadastrar-se
             </Button>
           </Link>

@@ -18,7 +18,7 @@ export default function Tabs({ className, opcao1, opcao2, opcao3, activeTab, onT
     return (
         <>
             <div className={className}>
-                <ul className="hidden text-sm font-medium text-center text-gray-500 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
+                <ul className="text-sm font-medium text-center text-gray-500 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
                     <li className="w-full focus-within:z-10">
                         {/* <a href="" */}
                         <Button

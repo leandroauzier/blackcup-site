@@ -11,12 +11,12 @@ export default function Signin({ }: SigninProps) {
     <>
     <Navbar />
       <div className="flex justify-center dark:bg-slate-950">
-        <div className="border dark:bg-slate-800 border-gray-300 p-10 mt-8 w-2/6 rounded-lg">
+        <div className="border dark:bg-slate-800 border-gray-300 p-10 m-8 w-[600px] rounded-lg">
           <div className="justify-center text-center">
             <Typography
               variant="h2"
               color="blue"
-              className="dark:text-white"
+              className="dark:text-white sm:text-4xl text-2xl"
             >
               Faça login na sua conta BlackCup
             </Typography>
