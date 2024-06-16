@@ -14,10 +14,6 @@ export function readCurrentUser(): UserResult {
     return decodeCurrentUser(value);
   }
 
-//   console.log("Retornou nulo em readCurrentUser");
-//   return null;
-// }
-
 export function writeCurrentUser(user: UserResult): void {
     if (user === 'nao-logado' || user === "carregando") {
       localStorage.removeItem(LOCAL_STORAGE_KEY);
@@ -31,9 +27,10 @@ export function writeCurrentUser(user: UserResult): void {
 function decodeCurrentUser(encoded: string): UserResult {
   try {
     const json = JSON.parse(encoded);
-    const { nome, email, cpf, telefone, escolaridade } = json;
+    const { id, nome, email, cpf, telefone, escolaridade } = json;
 
     if (
+      typeof id !== 'number' ||
       typeof nome !== 'string' ||
       typeof email !== 'string' ||
       typeof cpf !== 'string' ||
@@ -43,7 +40,7 @@ function decodeCurrentUser(encoded: string): UserResult {
       return "nao-logado";
     }
 
-    return { nome, email, cpf, telefone, escolaridade };
+    return { id, nome, email, cpf, telefone, escolaridade };
   } catch (err) {
     return "nao-logado"; // JSON inválido
   }

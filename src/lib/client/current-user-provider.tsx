@@ -4,12 +4,13 @@ import { CurrentUserContext } from "./current-user-context";
 import { readCurrentUser, writeCurrentUser } from "./local-storage-current-user";
 
 export function CurrentUserProvider({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = React.useState<UserResult>("carregando");
+  const [currentUser, setCurrentUser] = React.useState<UserResult>('carregando');
 
   useEffect(() => {
     setCurrentUser(readCurrentUser());
   },[])
-  
+
+
   return (
     <CurrentUserContext.Provider value={{
       currentUser,

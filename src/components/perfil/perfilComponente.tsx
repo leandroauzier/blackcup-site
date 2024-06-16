@@ -1,13 +1,14 @@
 'use client'
+import { CurrentUserContext } from "@/lib/client/current-user-context";
+import loading from "@/utils/loading";
 import { Button, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
-import UnidadeDadosPerfil from "./UnidadeDadosPerfil";
 import AtualizaPerfilForm from "../forms/atualizaPerfilForm/atualizaPerfilForm";
-import { CurrentUserContext } from "@/lib/client/current-user-context";
+import UnidadeDadosPerfil from "./UnidadeDadosPerfil";
 
 export default function PerfilComponent() {
+  const { currentUser } = React.useContext(CurrentUserContext)
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { currentUser } = React.useContext(CurrentUserContext);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -16,9 +17,18 @@ export default function PerfilComponent() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  if (currentUser === "carregando") {
+    return loading();
+  }
+
+  if (currentUser === "nao-logado") {
+    return null
+  }
+
   return (
     <>
-      <div className="flex justify-center mt-20 text-center bg-black">
+      <div className="flex justify-center mt-20 text-center">
         <div className="flex flex-col border-1 rounded-lg shadow-md container">
           <div className="flex flex-col h-[150px]">
             <Typography
@@ -38,28 +48,31 @@ export default function PerfilComponent() {
               Informações da sua conta BlackCup
             </Typography>
           </div>
-          <hr />
-          <div className="flex-col justify-center text-center h-[600px]">
-            <div className="grid grid-cols-3">
-              <UnidadeDadosPerfil label="Nome" data={currentUser?.nome} />
-              <UnidadeDadosPerfil label="CPF" data={currentUser?.cpf} />
-              <UnidadeDadosPerfil label="Telefone" data={currentUser?.telefone}/>
-              <UnidadeDadosPerfil label="Escolaridade" data={currentUser?.escolaridade}/>
-              <UnidadeDadosPerfil label="Email" data={currentUser?.email} />
-            </div>
-            <div className=" mt-4">
-              <Button onClick={openModal} className="bg-purple-900 p-4">
-                Editar informações
-              </Button>
-            </div>
-            {isModalOpen && (
-              <div className="fixed top-0 left-0 z-50 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center">
-                <AtualizaPerfilForm closeModal={closeModal}/>
+          <div className="flex-col justify-center text-center md:h-[450px]">
+            <div className="py-4 px-8">
+              <hr />
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 ">
+                <UnidadeDadosPerfil label="Nome" data={currentUser?.nome} />
+                <UnidadeDadosPerfil label="CPF" data={currentUser?.cpf} />
+                <UnidadeDadosPerfil label="Telefone" data={currentUser?.telefone} />
+                <UnidadeDadosPerfil label="Escolaridade" data={currentUser?.escolaridade} />
+                <UnidadeDadosPerfil label="Email" data={currentUser?.email} />
               </div>
-            )}
-
+              <div className=" mt-4">
+                <Button
+                  onClick={openModal}
+                  className="bg-blue-500 dark:bg-yellow-700 dark:text-black"
+                >
+                  Editar dados pessoais
+                </Button>
+              </div>
+              {isModalOpen && (
+                <div className="fixed top-0 left-0 z-50 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                  <AtualizaPerfilForm closeModal={closeModal} />
+                </div>
+              )}
+            </div>
           </div>
-
         </div>
       </div>
     </>
