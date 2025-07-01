@@ -7,9 +7,10 @@ import { Route } from "@/lib/routes";
 import { CurrentUserContext } from "@/lib/client/current-user-context";
 import Link from "next/link";
 import { Button } from "@material-tailwind/react";
+import Swal from "sweetalert2";
 
 const LoginIn: React.FC = () => {
-  const [cpf, setCpf] = useState('');
+  const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
   const [sucesso, setSucesso] = useState('');
@@ -18,20 +19,20 @@ const LoginIn: React.FC = () => {
 
   const router = useRouter()
 
-  const handleInputCPF = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const formattedCPF = event.target.value.replace(/\D/g, '');
-    const cpfWithMask = formattedCPF.replace(
-      /(\d{3})(\d{3})(\d{3})(\d{2})/,
-      '$1.$2.$3-$4'
-    );
+  // const handleInputCPF = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const formattedCPF = event.target.value.replace(/\D/g, '');
+  //   const cpfWithMask = formattedCPF.replace(
+  //     /(\d{3})(\d{3})(\d{3})(\d{2})/,
+  //     '$1.$2.$3-$4'
+  //   );
 
-    setCpf(cpfWithMask);
-  };
+  //   setCpf(cpfWithMask);
+  // };
   async function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const unmaskedCpf = cpf.replace(/\D/g, '');
+    // const unmaskedCpf = cpf.replace(/\D/g, '');
     const creds = {
-      cpf: unmaskedCpf,
+      email: email,
       senha: senha,
     }
 
@@ -43,27 +44,33 @@ const LoginIn: React.FC = () => {
       }
 
       setCurrentUser(result.user);
-      setErro("")
-      setSucesso("Logado com sucesso")
+      Swal.fire({
+        color: "white",
+        background: "#020617",
+        icon: "success",
+        title: "Login Realizado",
+        timer: 2000,
+        timerProgressBar: true
+      })
       await new Promise(resolve => setTimeout(resolve, 500));
       router.push(Route.link.home);
     } catch (error: any) {
       console.error("Login error:", error);
-      setErro(error.message);
+      Swal.fire({
+        color: "white",
+        background: "#020617",
+        icon: "error",
+        title: "Error",
+        text: "Não conseguimos realizar seu login"
+      })
     }
   }
 
   return (
     <>
       <div className="max-w-sm mx-auto">
-        <div className="text-red-500 flex justify-center">
-          {erro}
-        </div>
-        <div className="text-green-500 flex justify-center">
-          {sucesso}
-        </div>
         <form onSubmit={login}>
-          <div className="mb-5">
+          {/* <div className="mb-5">
             <label
               htmlFor="cpf"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -78,6 +85,22 @@ const LoginIn: React.FC = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Somente numeros"
               onChange={handleInputCPF}
+              required />
+          </div> */}
+          <div className="mb-5">
+            <label
+              htmlFor="cpf"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Email
+            </label>
+            <input
+              type="txt"
+              id="email"
+              name="email"
+              value={email}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
               required />
           </div>
           <div className="mb-5">

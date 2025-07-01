@@ -27,20 +27,20 @@ export function writeCurrentUser(user: UserResult): void {
 function decodeCurrentUser(encoded: string): UserResult {
   try {
     const json = JSON.parse(encoded);
-    const { id, nome, email, cpf, telefone, escolaridade } = json;
+    const { id, nome, email, telefone, escolaridade } = json;
 
     if (
       typeof id !== 'number' ||
       typeof nome !== 'string' ||
       typeof email !== 'string' ||
-      typeof cpf !== 'string' ||
+      // typeof cpf !== 'string' ||
       typeof telefone !== 'string' ||
       typeof escolaridade !== 'string'
     ) {
       return "nao-logado";
     }
 
-    return { id, nome, email, cpf, telefone, escolaridade };
+    return { id, nome, email, telefone, escolaridade };
   } catch (err) {
     return "nao-logado"; // JSON inválido
   }

@@ -10,19 +10,30 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
+}
+
+model Session {
+  id        String   @id @default(cuid()) // ou use @default(uuid()) se preferir
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  usuarioId Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([usuarioId])
+  @@index([expiresAt])
 }
 
 model Usuario {
-  id           Int     @id @default(autoincrement())
-  cpf          String  @unique
-  email        String  @unique
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
   nome         String?
   telefone     String?
   escolaridade String?
   imgPerfil    String?
   senha        String?
+
+  Session      Session[]
 }
 
 model Eventos {

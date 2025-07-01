@@ -2,7 +2,7 @@ import { CurrentUser } from "../client/current-user";
 import { Route } from "../routes";
 
 type Credentials = {
-  cpf: string;
+  email: string;
   senha: string;
 };
 
